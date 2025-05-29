@@ -29,16 +29,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        Set<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.getRoleName()))
-                .collect(Collectors.toSet());
-
+                .orElseThrow(() -> new UsernameNotFoundException("Kullanıcı bulunamadı: " + username));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
-                user.getPassword(),
-                authorities
+                user.getPassword(), // bu şifre ENCODE edilmiş olmalı (register işlemi sırasında!)
+                user.getAuthorities()
         );
     }
 }

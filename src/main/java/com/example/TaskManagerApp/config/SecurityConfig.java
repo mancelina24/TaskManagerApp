@@ -48,9 +48,9 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                .httpBasic(Customizer.withDefaults())
-                //.formLogin(form -> form.disable())
-                //.httpBasic(httpBasic -> httpBasic.disable())
-                .formLogin(Customizer.withDefaults()) //Spring’in kendi login sayfasını aktif hale getirmek demektir.
+                .formLogin(form -> form.disable())
+                .httpBasic(httpBasic -> httpBasic.disable())
+                //.formLogin(Customizer.withDefaults()) //Spring’in kendi login sayfasını aktif hale getirmek demektir.
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
